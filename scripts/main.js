@@ -1,11 +1,33 @@
 import { dataCourses } from './dataCourses.js';
+import { dataStudent } from './dataStudent.js';
+var nameTitle = document.getElementById('name');
+var studentDatabody = document.getElementById('studentData');
 var coursesTbody = document.getElementById('courses');
 var btnfilterByName = document.getElementById("button-filterByName");
 var inputSearchBox = document.getElementById("search-box");
 var totalCreditElm = document.getElementById("total-credits");
 btnfilterByName.onclick = function () { return applyFilterByName(); };
 renderCoursesInTable(dataCourses);
+renderStudentDataInTable(dataStudent);
 totalCreditElm.innerHTML = "" + getTotalCredits(dataCourses);
+function renderStudentDataInTable(data) {
+    console.log("Desplegando datos del estudiante");
+    for (var prop in data) {
+        if (prop == "name") {
+            nameTitle.innerHTML = data[prop];
+            continue;
+        }
+        var trElement = document.createElement("tr");
+        trElement.innerHTML = "<td>" + prop + "</td>\n                           <td>" + data[prop] + "</td>";
+        studentDatabody.appendChild(trElement);
+    }
+    /*studentDatabody.innerHTML=`<tr>${data.name}</tr>
+                             <tr>${data.code}</tr>
+                             <tr>${data.id}</tr>
+                             <tr>${data.age}</tr>
+                             <tr>${data.address}</tr>
+                             <tr>${data.tel}</tr>`; */
+}
 function renderCoursesInTable(courses) {
     console.log('Desplegando cursos');
     courses.forEach(function (course) {
