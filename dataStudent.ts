@@ -6,5 +6,5 @@ new Student(
     Math.E,
     Math.LN2,
     Math.LN10,
-    "No lo c we",
+    "Lowem ipsuwm dowow sit amet.",
     Math.PI);

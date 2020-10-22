@@ -6,7 +6,11 @@ var coursesTbody = document.getElementById('courses');
 var btnfilterByName = document.getElementById("button-filterByName");
 var inputSearchBox = document.getElementById("search-box");
 var totalCreditElm = document.getElementById("total-credits");
+var rangoIni = document.getElementById("ran-from");
+var rangoFin = document.getElementById("ran-to");
+var btnFiltroRango = document.getElementById("btn-range");
 btnfilterByName.onclick = function () { return applyFilterByName(); };
+btnFiltroRango.onclick = function () { return filtroRango(); };
 renderCoursesInTable(dataCourses);
 renderStudentDataInTable(dataStudent);
 totalCreditElm.innerHTML = "" + getTotalCredits(dataCourses);
@@ -47,6 +51,27 @@ function searchCourseByName(nameKey, courses) {
     return nameKey === '' ? dataCourses : courses.filter(function (c) {
         return c.name.match(nameKey);
     });
+}
+function filtroRango() {
+    var desde = rangoIni.value; //Esto marca error pero funciona y ni idea de qué propiedad no marque error xd
+    var hasta = rangoFin.value;
+    if (!desde || !hasta) {
+        clearCoursesInTable();
+        renderCoursesInTable(dataCourses);
+    }
+    else if (hasta < desde || desde > hasta) {
+        //._.xD
+        //Esto está aquí solo para que no se haga nada si eso pasa jsjsjs
+        1 + 1; //Aparentemente el compilador ignora esto si no hago nada en el if, así que ahora hace esta suma B)
+    }
+    else {
+        var nuevoArreglo = dataCourses.filter(function (course) {
+            return course.credits > desde && course.credits < hasta;
+        });
+        console.log(nuevoArreglo);
+        clearCoursesInTable();
+        renderCoursesInTable(nuevoArreglo);
+    }
 }
 function getTotalCredits(courses) {
     var totalCredits = 0;

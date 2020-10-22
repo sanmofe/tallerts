@@ -12,9 +12,13 @@ let coursesTbody: HTMLElement = document.getElementById('courses')!;
 const btnfilterByName: HTMLElement = document.getElementById("button-filterByName")!;
 const inputSearchBox: HTMLInputElement = <HTMLInputElement> document.getElementById("search-box")!;
 const totalCreditElm: HTMLElement = document.getElementById("total-credits")!;
-
+const rangoIni: HTMLElement = document.getElementById("ran-from")!;
+const rangoFin: HTMLElement = document.getElementById("ran-to")!;
+const btnFiltroRango: HTMLElement = document.getElementById("btn-range")!;
 
 btnfilterByName.onclick = () => applyFilterByName();
+
+btnFiltroRango.onclick = () => filtroRango();
 
 renderCoursesInTable(dataCourses);
 
@@ -67,6 +71,27 @@ function searchCourseByName(nameKey: string, courses: Course[]) {
     c.name.match(nameKey));
 }
 
+function filtroRango(){
+  const desde:number = <number><unknown>rangoIni.value; //Esto marca error pero funciona y ni idea de qué propiedad no marque error xd
+  const hasta:number = <number><unknown>rangoFin.value;
+  if ( !desde || !hasta ){
+    clearCoursesInTable()
+    renderCoursesInTable(dataCourses);
+  }
+  else if(hasta < desde || desde > hasta){
+    //._.xD
+    //Esto está aquí solo para que no se haga nada si eso pasa jsjsjs
+    1+1; //Aparentemente el compilador ignora esto si no hago nada en el if, así que ahora hace esta suma B)
+  }
+  else{ 
+    const nuevoArreglo = dataCourses.filter(course =>{
+      return course.credits > desde && course.credits < hasta;
+    });     
+    console.log(nuevoArreglo);
+    clearCoursesInTable();
+    renderCoursesInTable(nuevoArreglo);
+  }
+}
 
 function getTotalCredits(courses: Course[]): number {
   let totalCredits: number = 0;
